@@ -4,7 +4,7 @@ import { YoutubeService } from "../services/youtube-service";
 export class YoutubeController {
 
     public static async getYoutubeMetrics(req: Request, res: Response) {
-        const metrics = YoutubeService.getYoutubeMetrics()
+        const metrics = YoutubeService.getMetrics()
         res.json(metrics)
     }
 }

@@ -1,3 +1,7 @@
+# fly.toml app configuration file generated for midia-kit-backend on 2025-02-09T16:00:13-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = 'midia-kit-backend'
 primary_region = 'gru'

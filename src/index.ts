@@ -17,7 +17,7 @@ server.use(cors());
 server.use(express.json());
 server.use(appRoutes)
 
-server.listen(5555, () => (
+server.listen(process.env.PORT, () => (
     console.log("servidor abrido")
 ))
 
