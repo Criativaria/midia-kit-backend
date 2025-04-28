@@ -4,8 +4,6 @@
 ARG NODE_VERSION=20.11.1
 FROM node:${NODE_VERSION}-slim as base
 
-LABEL fly_launch_runtime="Node.js/Prisma"
-
 # Node.js/Prisma app lives here
 WORKDIR /app
 
@@ -15,10 +13,6 @@ ENV NODE_ENV="production"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
-
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp openssl pkg-config python-is-python3
 
 # Install node modules
 COPY --link package-lock.json package.json ./
@@ -43,8 +37,9 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built application
-COPY --from=build /app /app
+COPY --from=build /app/dist /app
+COPY --from=build /app/node_modules /app/node_modules
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "node", "build/src/index.js" ]
+CMD [ "node", "index.js" ]
